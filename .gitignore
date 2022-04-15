@@ -4,12 +4,3 @@
 *.mat
 *.DS_Store
 *.gif
-local/
-/data_processing/createDataBaseOSM/data
-/data_processing/createDataBaseOSM/result
-/data_processing/createDataBaseOSM/dataPrepare
-/data
-
-short_test_results/
-
-test_results/
