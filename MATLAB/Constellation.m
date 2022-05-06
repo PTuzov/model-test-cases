@@ -88,9 +88,9 @@ classdef Constellation < handle
         function propagateJ2(this, epochs)
             this.state.eci = zeros(this.totalSatCount, 3, length(epochs));
 
-            inclination = this.state.elements(:, 5);
             sma         = this.state.elements(:, 1);
-            Omega0      = sqrt(this.earthGM ./ sma.^3);
+            inclination = this.state.elements(:, 5);            
+            raan0       = this.state.elements(:, 4);
             aol0        = this.state.elements(:, 6);
 
             raanPrecessionRate = -1.5 * (this.earthJ2 * this.earthGM^(1/2) * this.earthRadius^2) ./ (sma.^(7/2)) .* cos(inclination);
@@ -98,10 +98,10 @@ classdef Constellation < handle
 
             for epochIdx = 1:length(epochs)
                 aol = aol0 + epochs(epochIdx) * draconicOmega;
-                Omega = Omega0 + epochs(epochIdx) * raanPrecessionRate;
+                raanOmega = raan0 + epochs(epochIdx) * raanPrecessionRate;
 
-                this.state.eci(:, :, epochIdx)  = [sma .* (cos(aol) .* cos(Omega) - sin(aol) .* cos(inclination) .* sin(Omega)), ...
-                                                   sma .* (cos(aol) .* sin(Omega) + sin(aol) .* cos(inclination) .* cos(Omega)), ...
+                this.state.eci(:, :, epochIdx)  = [sma .* (cos(aol) .* cos(raanOmega) - sin(aol) .* cos(inclination) .* sin(raanOmega)), ...
+                                                   sma .* (cos(aol) .* sin(raanOmega) + sin(aol) .* cos(inclination) .* cos(raanOmega)), ...
                                                    sma .* (sin(aol) .* sin(inclination))];
             end
         end
