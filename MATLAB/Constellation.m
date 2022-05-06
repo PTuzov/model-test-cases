@@ -6,9 +6,9 @@ classdef Constellation < handle
         state;
 
         % константы
-        earthRadius = 6378135;           % Экваториальный радиус Земли [km]
+        earthRadius = 6378135;           % Экваториальный радиус Земли [m]
         earthGM = 3.986004415e+14;       % Гравитационный параметр Земли [m3/s2]
-        earthJ2 = 1.082626e-3;           % First zonal harmonic coefficient in the expansion of the Earth's gravity field
+        earthJ2 = 1.082626e-3;           % Вторая зональная гармоника геопотенциала
     end
 
     methods
@@ -39,13 +39,13 @@ classdef Constellation < handle
             end
 
             for i = 1:size(dataThis.Walkers, 1)
-                group.inclination = deg2rad(dataThis.Walkers(i, 1));
-                group.satsPerPlane = dataThis.Walkers(i, 2);
-                group.planeCount = dataThis.Walkers(i, 3);
-                group.f = dataThis.Walkers(i, 4);
-                group.altitude = dataThis.Walkers(i, 5);
-                group.maxRaan = deg2rad(dataThis.Walkers(i, 6));
-                group.startRaan = deg2rad(dataThis.Walkers(i, 7));
+                group.inclination = deg2rad(dataThis.Walkers(i, 1));        % наклонение орбитальной плоскости
+                group.satsPerPlane = dataThis.Walkers(i, 2);				% число КА в каждой орбитальной плоскости группы
+                group.planeCount = dataThis.Walkers(i, 3);					% число орбитальных плоскостей в группе
+                group.f = dataThis.Walkers(i, 4);							% фазовый сдвиг по аргументу широты между КА в соседних плоскостях
+                group.altitude = dataThis.Walkers(i, 5);					% высота орбиты
+                group.maxRaan = deg2rad(dataThis.Walkers(i, 6));            % максимум прямого восхождения восходящего узла (при распределении орбитальных плоскостей)
+                group.startRaan = deg2rad(dataThis.Walkers(i, 7));			% прямое восхождение восходящего узла для первой плоскости
                 group.totalSatCount = group.satsPerPlane * group.planeCount;
 
                 this.groups{length(this.groups) + 1} = group;                

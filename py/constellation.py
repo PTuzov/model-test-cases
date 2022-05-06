@@ -10,19 +10,19 @@ class Parameters(object):
 Const = Parameters()
 Const.earthRadius = 6378135      # Экваториальный радиус Земли [m]
 Const.earthGM = 3.986004415e+14  # Гравитационный параметр Земли [m3/s2]
-Const.earthJ2 = 1.082626e-3      # Вторая зональная гармоника геопотенциала Земли
+Const.earthJ2 = 1.082626e-3      # Вторая зональная гармоника геопотенциала
 
 group = Parameters()
 
 
 class Walker(NamedTuple):
-    inclination: float
-    satsPerPlane: int
-    planeCount: int
-    f: int
-    altitude: float
-    maxRaan: float
-    startRaan: float
+    inclination: float           # наклонение орбиты
+    satsPerPlane: int            # число КА в каждой орбитальной плоскости группы
+    planeCount: int              # число орбитальных плоскостей в группе
+    f: int                       # фазовый сдвиг по аргументу широты между КА в соседних плоскостях
+    altitude: float              # высота орбиты
+    maxRaan: float               # максимум прямого восхождения восходящего узла (при распределении орбитальных плоскостей)
+    startRaan: float             # прямое восхождение восходящего узла для первой плоскости
 
 
 class WalkerGroup(Walker):
